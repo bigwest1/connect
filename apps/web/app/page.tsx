@@ -3,7 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stage } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { DayNightProvider, useEveningAutoOn } from "@homegraph/engine";
-import { EngineScene, QualityTierProvider, useQuality } from "@homegraph/engine/src/client";
+import { EngineScene, QualityTierProvider, isWebGPUSupported, createWebGPURenderer } from "@homegraph/engine/src/client";
 import { DeviceRail } from "../components/shell/DeviceRail";
 import { OfflineBadge } from "../components/ui/OfflineBadge";
 import { PinsOverlay } from "../components/shell/PinsOverlay";
@@ -21,6 +21,7 @@ export default function Home() {
   const [perf, setPerf] = useLocalStorage<"Ultra" | "High" | "Balanced" | "Battery">("homegraph.perf", "High");
   const dayState = useState(0.5); // kept for EngineScene backward-compat
   const perfOpts = useMemo(() => ({ tier: perf }), [perf]);
+  const [useWebGPU, setUseWebGPU] = useLocalStorage<boolean>("homegraph.webgpu", false);
   const run = useScenes((s) => s.run);
 
   const [geo, setGeo] = useLocalStorage<{ lat: number; lon: number }>("homegraph.geo", { lat: 44.9778, lon: -93.265 });
@@ -69,24 +70,42 @@ export default function Home() {
       <QualityTierProvider initialTier={perf}>
       <div className="h-screen w-screen grid grid-cols-[320px_1fr]">
         <aside className="glass p-4 flex flex-col gap-4">
-          <DeviceRail dayState={dayState} onPerfChange={setPerf} perf={perf} geo={geo} onGeoChange={setGeo} />
+          <DeviceRail dayState={dayState} onPerfChange={setPerf} perf={perf} geo={geo} onGeoChange={setGeo} useWebGPU={useWebGPU} onWebGPUChange={setUseWebGPU} />
         </aside>
         <main className="relative">
-          <Canvas shadows dpr={[1, 2]}>
-            <color attach="background" args={[0.06, 0.08, 0.11]} />
-            <Suspense fallback={null}>
-              <Stage
-                intensity={0.65}
-                environment="city"
-                adjustCamera
-                preset="soft"
-                shadows="contact"
-              >
-                <EngineScene dayState={dayState} perf={perfOpts} />
-              </Stage>
-            </Suspense>
-            <OrbitControls makeDefault enablePan={false} />
-          </Canvas>
+          {useWebGPU && isWebGPUSupported() ? (
+            <Canvas shadows dpr={[1, 2]} gl={(canvas: HTMLCanvasElement) => createWebGPURenderer({ canvas } as any) as any}>
+              <color attach="background" args={[0.06, 0.08, 0.11]} />
+              <Suspense fallback={null}>
+                <Stage
+                  intensity={0.65}
+                  environment="city"
+                  adjustCamera
+                  preset="soft"
+                  shadows="contact"
+                >
+                  <EngineScene dayState={dayState} perf={perfOpts} />
+                </Stage>
+              </Suspense>
+              <OrbitControls makeDefault enablePan={false} />
+            </Canvas>
+          ) : (
+            <Canvas shadows dpr={[1, 2]}>
+              <color attach="background" args={[0.06, 0.08, 0.11]} />
+              <Suspense fallback={null}>
+                <Stage
+                  intensity={0.65}
+                  environment="city"
+                  adjustCamera
+                  preset="soft"
+                  shadows="contact"
+                >
+                  <EngineScene dayState={dayState} perf={perfOpts} />
+                </Stage>
+              </Suspense>
+              <OrbitControls makeDefault enablePan={false} />
+            </Canvas>
+          )}
           <PinsOverlay />
           <OfflineBadge />
           <SelectedDrawer geo={geo} />

@@ -19,9 +19,11 @@ type Props = {
   perf: "Ultra" | "High" | "Balanced" | "Battery";
   geo: { lat: number; lon: number };
   onGeoChange: (g: { lat: number; lon: number }) => void;
+  useWebGPU?: boolean;
+  onWebGPUChange?: (v: boolean) => void;
 };
 
-export function DeviceRail({ dayState, onPerfChange, perf, geo, onGeoChange }: Props) {
+export function DeviceRail({ dayState, onPerfChange, perf, geo, onGeoChange, useWebGPU, onWebGPUChange }: Props) {
   const devices = useDevices((s) => s.devices);
   const quality = (() => { try { return useQuality(); } catch { return null; } })();
   const [day, setDay] = dayState; // retained for EngineScene prop compat
@@ -114,6 +116,10 @@ export function DeviceRail({ dayState, onPerfChange, perf, geo, onGeoChange }: P
         <label className="flex items-center justify-between text-[11px] mt-1">
           <span>Force KTX2 textures</span>
           <Switch checked={!!quality?.forceKTX2} onCheckedChange={(v)=> quality?.setForceKTX2(v)} />
+        </label>
+        <label className="flex items-center justify-between text-[11px] mt-1">
+          <span>WebGPU (experimental)</span>
+          <Switch checked={!!useWebGPU} onCheckedChange={(v)=> onWebGPUChange?.(v)} />
         </label>
       </div>
 
