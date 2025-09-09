@@ -3,7 +3,8 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stage } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { DayNightProvider, useEveningAutoOn } from "@homegraph/engine";
-import { EngineScene, QualityTierProvider, isWebGPUSupported, createWebGPURenderer } from "@homegraph/engine/src/client";
+import { EngineScene, QualityTierProvider } from "@homegraph/engine/src/client";
+import { isWebGPUSupported, createWebGPURenderer } from "@homegraph/engine/src/webgpu";
 import { DeviceRail } from "../components/shell/DeviceRail";
 import { OfflineBadge } from "../components/ui/OfflineBadge";
 import { PinsOverlay } from "../components/shell/PinsOverlay";
@@ -74,7 +75,7 @@ export default function Home() {
         </aside>
         <main className="relative">
           {useWebGPU && isWebGPUSupported() ? (
-            <Canvas shadows dpr={[1, 2]} gl={(canvas: HTMLCanvasElement) => createWebGPURenderer({ canvas } as any) as any}>
+            <Canvas shadows dpr={[1, 2]} gl={(canvas) => createWebGPURenderer({ canvas } as any) as any}>
               <color attach="background" args={[0.06, 0.08, 0.11]} />
               <Suspense fallback={null}>
                 <Stage
