@@ -62,6 +62,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@homegraph/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@homegraph/devices':
         specifier: workspace:*
         version: link:../../packages/devices

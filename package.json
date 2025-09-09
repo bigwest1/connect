@@ -11,7 +11,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write .",
     "storybook": "turbo run storybook",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "pnpm -w --filter @homegraph/db run generate || true"
   },
   "devDependencies": {
     "@types/node": "^20.14.9",
