@@ -63,7 +63,12 @@ export function SelectedDrawer({ geo }: { geo?: { lat: number; lon: number } }) 
       </div>
 
       {/* Controls based on capabilities */}
-      {device.capabilities.includes('onOff') && (
+      {(device.type === 'lock') ? (
+        <div className="flex items-center justify-between py-2">
+          <div>Locked</div>
+          <Switch checked={!!s.locked} onCheckedChange={(v) => updateState(device.id, { locked: v, on: v })} />
+        </div>
+      ) : device.capabilities.includes('onOff') && (
         <div className="flex items-center justify-between py-2">
           <div>Power</div>
           <Switch checked={!!s.on} onCheckedChange={(v) => updateState(device.id, { on: v })} />

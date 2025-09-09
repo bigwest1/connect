@@ -137,6 +137,26 @@ export function usePBRMaterials(tier: Tier) {
   const metal = maps("metal", [1, 1], false);
   const wood = maps("wood", [1, 1], true);
 
+  // If normal maps are missing, synthesize a micro normal to avoid flat look.
+  function ensureMicroNormal(mat: THREE.MeshStandardMaterial) {
+    if (!mat.normalMap) {
+      const size = 64;
+      const data = new Uint8Array(size * size * 4);
+      for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+          const i = (y * size + x) * 4;
+          const nx = Math.floor(128 + 20 * Math.sin((x + y) * 0.3));
+          const ny = Math.floor(128 + 20 * Math.cos((x - y) * 0.3));
+          data[i] = nx; data[i+1] = ny; data[i+2] = 255; data[i+3] = 255;
+        }
+      }
+      const tex = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
+      tex.needsUpdate = true;
+      mat.normalMap = tex as any;
+      mat.needsUpdate = true;
+    }
+  }
+
   // Materials memoized to avoid re-instantiation every frame
   const sidingMat = useMemo(() => new THREE.MeshStandardMaterial({ metalness: 0.05, roughness: 0.65 }), []);
   const brickMat = useMemo(() => new THREE.MeshStandardMaterial({ metalness: 0.0, roughness: 0.8 }), []);
@@ -148,22 +168,22 @@ export function usePBRMaterials(tier: Tier) {
 
   // Assign maps when ready
   useEffect(() => {
-    if (sidingMat) { sidingMat.map = siding.colorMap ?? sidingMat.map; sidingMat.normalMap = siding.normalMap ?? sidingMat.normalMap; sidingMat.roughnessMap = siding.roughnessMap ?? sidingMat.roughnessMap; sidingMat.aoMap = siding.aoMap ?? sidingMat.aoMap; sidingMat.needsUpdate = true; }
+    if (sidingMat) { sidingMat.map = siding.colorMap ?? sidingMat.map; sidingMat.normalMap = siding.normalMap ?? sidingMat.normalMap; sidingMat.roughnessMap = siding.roughnessMap ?? sidingMat.roughnessMap; sidingMat.aoMap = siding.aoMap ?? sidingMat.aoMap; ensureMicroNormal(sidingMat); sidingMat.needsUpdate = true; }
   }, [siding.colorMap, siding.normalMap, siding.roughnessMap, siding.aoMap, sidingMat]);
   useEffect(() => {
-    if (brickMat) { brickMat.map = brick.colorMap ?? brickMat.map; brickMat.normalMap = brick.normalMap ?? brickMat.normalMap; brickMat.roughnessMap = brick.roughnessMap ?? brickMat.roughnessMap; brickMat.aoMap = brick.aoMap ?? brickMat.aoMap; brickMat.needsUpdate = true; }
+    if (brickMat) { brickMat.map = brick.colorMap ?? brickMat.map; brickMat.normalMap = brick.normalMap ?? brickMat.normalMap; brickMat.roughnessMap = brick.roughnessMap ?? brickMat.roughnessMap; brickMat.aoMap = brick.aoMap ?? brickMat.aoMap; ensureMicroNormal(brickMat); brickMat.needsUpdate = true; }
   }, [brick.colorMap, brick.normalMap, brick.roughnessMap, brick.aoMap, brickMat]);
   useEffect(() => {
-    if (asphaltMat) { asphaltMat.map = asphalt.colorMap ?? asphaltMat.map; asphaltMat.normalMap = asphalt.normalMap ?? asphaltMat.normalMap; asphaltMat.roughnessMap = asphalt.roughnessMap ?? asphaltMat.roughnessMap; asphaltMat.aoMap = asphalt.aoMap ?? asphaltMat.aoMap; asphaltMat.needsUpdate = true; }
+    if (asphaltMat) { asphaltMat.map = asphalt.colorMap ?? asphaltMat.map; asphaltMat.normalMap = asphalt.normalMap ?? asphaltMat.normalMap; asphaltMat.roughnessMap = asphalt.roughnessMap ?? asphaltMat.roughnessMap; asphaltMat.aoMap = asphalt.aoMap ?? asphaltMat.aoMap; ensureMicroNormal(asphaltMat); asphaltMat.needsUpdate = true; }
   }, [asphalt.colorMap, asphalt.normalMap, asphalt.roughnessMap, asphalt.aoMap, asphaltMat]);
   useEffect(() => {
-    if (concreteMat) { concreteMat.map = concrete.colorMap ?? concreteMat.map; concreteMat.normalMap = concrete.normalMap ?? concreteMat.normalMap; concreteMat.roughnessMap = concrete.roughnessMap ?? concreteMat.roughnessMap; concreteMat.aoMap = concrete.aoMap ?? concreteMat.aoMap; concreteMat.needsUpdate = true; }
+    if (concreteMat) { concreteMat.map = concrete.colorMap ?? concreteMat.map; concreteMat.normalMap = concrete.normalMap ?? concreteMat.normalMap; concreteMat.roughnessMap = concrete.roughnessMap ?? concreteMat.roughnessMap; concreteMat.aoMap = concrete.aoMap ?? concreteMat.aoMap; ensureMicroNormal(concreteMat); concreteMat.needsUpdate = true; }
   }, [concrete.colorMap, concrete.normalMap, concrete.roughnessMap, concrete.aoMap, concreteMat]);
   useEffect(() => {
-    if (metalMat) { metalMat.map = metal.colorMap ?? metalMat.map; metalMat.normalMap = metal.normalMap ?? metalMat.normalMap; metalMat.roughnessMap = metal.roughnessMap ?? metalMat.roughnessMap; metalMat.aoMap = metal.aoMap ?? metalMat.aoMap; metalMat.needsUpdate = true; }
+    if (metalMat) { metalMat.map = metal.colorMap ?? metalMat.map; metalMat.normalMap = metal.normalMap ?? metalMat.normalMap; metalMat.roughnessMap = metal.roughnessMap ?? metalMat.roughnessMap; metalMat.aoMap = metal.aoMap ?? metalMat.aoMap; ensureMicroNormal(metalMat); metalMat.needsUpdate = true; }
   }, [metal.colorMap, metal.normalMap, metal.roughnessMap, metal.aoMap, metalMat]);
   useEffect(() => {
-    if (woodMat) { woodMat.map = wood.colorMap ?? woodMat.map; woodMat.normalMap = wood.normalMap ?? woodMat.normalMap; woodMat.roughnessMap = wood.roughnessMap ?? woodMat.roughnessMap; woodMat.aoMap = wood.aoMap ?? woodMat.aoMap; woodMat.needsUpdate = true; }
+    if (woodMat) { woodMat.map = wood.colorMap ?? woodMat.map; woodMat.normalMap = wood.normalMap ?? woodMat.normalMap; woodMat.roughnessMap = wood.roughnessMap ?? woodMat.roughnessMap; woodMat.aoMap = wood.aoMap ?? woodMat.aoMap; ensureMicroNormal(woodMat); woodMat.needsUpdate = true; }
   }, [wood.colorMap, wood.normalMap, wood.roughnessMap, wood.aoMap, woodMat]);
 
   return {

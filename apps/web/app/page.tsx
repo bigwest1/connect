@@ -6,6 +6,7 @@ import { DayNightProvider, useEveningAutoOn } from "@homegraph/engine";
 import { EngineScene, QualityTierProvider } from "@homegraph/engine/src/client";
 import { isWebGPUSupported, createWebGPURenderer } from "@homegraph/engine/src/webgpu";
 import { DeviceRail } from "../components/shell/DeviceRail";
+import { TourRig } from "../components/TourRig";
 import { OfflineBadge } from "../components/ui/OfflineBadge";
 import { PinsOverlay } from "../components/shell/PinsOverlay";
 import { PerformanceToggle } from "../components/ui/performance-toggle";
@@ -17,6 +18,9 @@ import { SimulatorDrawer } from "../components/drawer/SimulatorDrawer";
 import { SceneEditorDrawer, openSceneEditor } from "../components/drawer/SceneEditorDrawer";
 import { GroupManagerDrawer, openGroupManager } from "../components/drawer/GroupManagerDrawer";
 import { openSimulator } from "../components/drawer/SimulatorDrawer";
+import { MetricsOverlay } from "../components/ui/MetricsOverlay";
+import { SpecBadge } from "../components/ui/SpecBadge";
+import { RoofLineworkPanel } from "../components/ui/RoofLineworkPanel";
 
 export default function Home() {
   const [perf, setPerf] = useLocalStorage<"Ultra" | "High" | "Balanced" | "Battery">("homegraph.perf", "High");
@@ -25,7 +29,8 @@ export default function Home() {
   const [useWebGPU, setUseWebGPU] = useLocalStorage<boolean>("homegraph.webgpu", false);
   const run = useScenes((s) => s.run);
 
-  const [geo, setGeo] = useLocalStorage<{ lat: number; lon: number }>("homegraph.geo", { lat: 44.9778, lon: -93.265 });
+  // Demo Home (Burnsville, MN) default location
+  const [geo, setGeo] = useLocalStorage<{ lat: number; lon: number }>("homegraph.geo", { lat: 44.7677, lon: -93.2776 });
 
   // Auto-run Evening scene when provider emits event
   useEveningAutoOn(() => {
@@ -76,6 +81,7 @@ export default function Home() {
         <main className="relative">
           {useWebGPU && isWebGPUSupported() ? (
             <Canvas shadows dpr={[1, 2]} gl={(canvas) => createWebGPURenderer({ canvas } as any) as any}>
+              <TourRig />
               <color attach="background" args={[0.06, 0.08, 0.11]} />
               <Suspense fallback={null}>
                 <Stage
@@ -92,6 +98,7 @@ export default function Home() {
             </Canvas>
           ) : (
             <Canvas shadows dpr={[1, 2]}>
+              <TourRig />
               <color attach="background" args={[0.06, 0.08, 0.11]} />
               <Suspense fallback={null}>
                 <Stage
@@ -109,6 +116,9 @@ export default function Home() {
           )}
           <PinsOverlay />
           <OfflineBadge />
+          <MetricsOverlay />
+          <SpecBadge />
+          <RoofLineworkPanel />
           <SelectedDrawer geo={geo} />
           <SimulatorDrawer geo={geo} />
           <SceneEditorDrawer />

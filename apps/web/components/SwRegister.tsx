@@ -8,7 +8,7 @@ export function SwRegister() {
       navigator.serviceWorker.register('/sw.js').then((reg) => {
         // Warm cache of common assets after first install
         const urls = [
-          '/', '/docs/metrics.json', '/assets/mock-scan.glb',
+          '/', '/docs/metrics.full.json', '/docs/metrics.json', '/assets/mock-scan.glb',
           // optionally try common textures; if missing, SW will ignore errors
           '/textures/siding/basecolor_512.jpg','/textures/siding/basecolor_2k.jpg',
           '/textures/brick/basecolor_512.jpg','/textures/brick/basecolor_2k.jpg',

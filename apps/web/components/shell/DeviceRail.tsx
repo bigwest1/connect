@@ -43,6 +43,7 @@ export function DeviceRail({ dayState, onPerfChange, perf, geo, onGeoChange, use
       <nav className="space-y-1 mb-3">
         <Link href="/" className="block glass rounded px-2 py-1 hover:bg-white/10 focus-ring">Home</Link>
         <Link href="/scan" className="block glass rounded px-2 py-1 hover:bg-white/10 focus-ring">Scan</Link>
+        <Link href="/assist" className="block glass rounded px-2 py-1 hover:bg-white/10 focus-ring">Assist from Photos</Link>
       </nav>
 
       <div className="space-y-2">

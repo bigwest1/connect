@@ -65,6 +65,8 @@ type DeviceState = {
   devices: Device[];
   selectedId: string | null;
   setSelected: (id: string | null) => void;
+  addDevice: (d: Omit<Device, 'actions'>) => void;
+  removeDevice: (id: string) => void;
   updateState: (id: string, partial: Record<string, any>) => void;
   setSchedules: (id: string, schedules: ScheduleRule[]) => void;
   applyAction: (id: string, action: Partial<Record<string, any>> & { scene?: string }) => void;
@@ -85,21 +87,31 @@ type DeviceState = {
   assignToGroup: (deviceId: string, groupId: string, present: boolean) => void;
 };
 
-export const useDevices = create<DeviceState>((set, get) => ({
-  devices: defaultDevices.map((d) => ({
+function withActions(d: Omit<Device, 'actions'>): Device {
+  return {
     ...d,
     actions: {
       toggle: () => {
-        const current = get().devices.find((x) => x.id === d.id);
+        const current = useDevices.getState().devices.find((x) => x.id === d.id);
         const targetOn = !(current?.state.on ?? false);
         const to = targetOn ? (current?.state.brightness ?? 0.6) || 0.6 : 0;
         animateProperty({ id: d.id, prop: 'brightness', to, duration: 700, easing: 'easeOutCubic' });
       },
-      select: () => get().setSelected(d.id)
+      select: () => useDevices.getState().setSelected(d.id)
     }
-  })),
+  } as Device;
+}
+
+export const useDevices = create<DeviceState>((set, get) => ({
+  devices: defaultDevices.map((d) => withActions(d)),
   selectedId: null,
   setSelected: (id) => set({ selectedId: id }),
+  addDevice: (d) => set(({ devices }) => {
+    const exists = devices.some((x) => x.id === d.id);
+    const next = exists ? devices.map((x) => (x.id === d.id ? withActions(d) : x)) : [...devices, withActions(d)];
+    return { devices: next } as any;
+  }),
+  removeDevice: (id) => set(({ devices }) => ({ devices: devices.filter((x) => x.id !== id) })),
   updateState: (id, partial) => set(({ devices }) => ({ devices: devices.map((x) => (x.id === id ? { ...x, state: { ...x.state, ...partial } } : x)) })),
   setSchedules: (id, schedules) => set(({ devices }) => ({ devices: devices.map((x) => (x.id === id ? { ...x, state: { ...x.state, schedules } } : x)) })),
   applyAction: (id, action) => {

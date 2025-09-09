@@ -3,6 +3,7 @@ import { useDevices, computeNextRun } from "@homegraph/devices";
 
 export function PinsOverlay() {
   const devices = useDevices((s) => s.devices);
+  const applyAction = useDevices((s) => s.applyAction);
   return (
     <div className="pointer-events-none absolute inset-0" role="list" aria-label="Device pins">
       {devices.slice(0, 8).map((d) => (
@@ -12,7 +13,15 @@ export function PinsOverlay() {
           style={{ left: `${10 + (d.position?.[0] ?? 0) * 40}%`, top: `${10 + (d.position?.[1] ?? 0) * 30}%` }}
           role="listitem"
           aria-label={`Select ${d.name}`}
-          onClick={() => d.actions.select()}
+          onClick={() => { d.actions.select();
+            const s = d.state as any;
+            // Quick visual nudge on click
+            if (d.type === 'light') applyAction(d.id, { on: true, brightness: Math.min(1, (s.brightness ?? 0.6) + 0.2) });
+            if (d.type === 'garageDoor') applyAction(d.id, { open: Math.min(1, (s.open ?? 0) + 0.2) });
+            if (d.type === 'lock') applyAction(d.id, { locked: !(s.locked ?? true), on: !(s.locked ?? true) });
+            if (d.type === 'camera') applyAction(d.id, { pan: ((s.pan ?? 0) + 0.2) % 1.0 });
+            if (d.type === 'outlet') applyAction(d.id, { on: !(s.on ?? false) });
+          }}
         >
           {d.icon}
           {Array.isArray((d.state as any)?.schedules) && (d.state as any).schedules.length > 0 ? (

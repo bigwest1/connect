@@ -51,4 +51,3 @@ test('scan simulate, toggle light, run Evening, assert state and screenshot', as
   const afterPng = await canvas.screenshot();
   await testInfo.attach('after-canvas', { body: afterPng, contentType: 'image/png' });
 });
-

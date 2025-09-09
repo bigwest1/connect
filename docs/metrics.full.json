@@ -1,0 +1,119 @@
+{
+  "meta": { "source": "measurements.pdf", "date": "2022-06-08" },
+  "stories": 2,
+  "footprint": { "perimeter_ft": 232.4167, "area_ft2": 2261 },
+  "openings_summary": {
+    "quantity": 29,
+    "tops_len_ft": 43.0833,
+    "sills_len_ft": 109.6667,
+    "sides_len_ft": 180.5,
+    "total_perimeter_ft": 333.25
+  },
+  "corners": {
+    "inside_qty": 6, "inside_len_ft": 35.4167,
+    "outside_qty": 6, "outside_len_ft": 56.5
+  },
+  "siding_by_elevation_ft2": { "front": 188, "right": 376, "left": 378, "back": 451, "total": 1393 },
+  "siding_facets": [
+    { "id": "SI-1", "area_ft2": 18, "inside": 1, "outside": 0, "openings": 0 },
+    { "id": "SI-2", "area_ft2": 24, "inside": 1, "outside": 1, "openings": 2 },
+    { "id": "SI-3", "area_ft2": 11, "inside": 0, "outside": 0, "openings": 0 },
+    { "id": "SI-4", "area_ft2": 33, "inside": 0, "outside": 1, "openings": 6 },
+    { "id": "SI-5", "area_ft2": 17, "inside": 0, "outside": 0, "openings": 0 },
+    { "id": "SI-6", "area_ft2": 21, "inside": 1, "outside": 0, "openings": 0 },
+    { "id": "SI-7", "area_ft2": 4, "inside": 0, "outside": 0, "openings": 0 },
+    { "id": "SI-8", "area_ft2": 13, "inside": 0, "outside": 0, "openings": 0 },
+    { "id": "SI-9", "area_ft2": 18, "inside": 1, "outside": 0, "openings": 0 },
+    { "id": "SI-10", "area_ft2": 13, "inside": 0, "outside": 0, "openings": 1 },
+    { "id": "SI-11", "area_ft2": 48, "inside": 1, "outside": 1, "openings": 0 },
+    { "id": "SI-12", "area_ft2": 4, "inside": 0, "outside": 0, "openings": 0 },
+    { "id": "SI-13", "area_ft2": 12, "inside": 0, "outside": 0, "openings": 0 },
+    { "id": "SI-14", "area_ft2": 236, "inside": 0, "outside": 1, "openings": 2 },
+    { "id": "SI-15", "area_ft2": 92, "inside": 1, "outside": 1, "openings": 2 },
+    { "id": "SI-16", "area_ft2": 12, "inside": 1, "outside": 1, "openings": 0 },
+    { "id": "SI-17", "area_ft2": 237, "inside": 1, "outside": 1, "openings": 10 },
+    { "id": "SI-18", "area_ft2": 202, "inside": 0, "outside": 2, "openings": 5 },
+    { "id": "SI-19", "area_ft2": 29, "inside": 1, "outside": 0, "openings": 0 },
+    { "id": "SI-20", "area_ft2": 93, "inside": 1, "outside": 0, "openings": 0 },
+    { "id": "SI-21", "area_ft2": 3, "inside": 1, "outside": 0, "openings": 0 },
+    { "id": "SI-22", "area_ft2": 10, "inside": 1, "outside": 1, "openings": 0 },
+    { "id": "SI-23", "area_ft2": 243, "inside": 0, "outside": 2, "openings": 1 }
+  ],
+  "brick_facets_ft2": { "BR-1": 12, "BR-2": 6, "BR-3": 8, "BR-4": 32, "BR-5": 81, "BR-6": 4, "BR-7": 79, "small_facets": 3, "total": 225 },
+  "trim_totals": {
+    "level_starter_siding_ft": 221.3333, "level_starter_other_ft": 72,
+    "sloped_trim_siding_ft": 1.8333, "sloped_trim_other_ft": 61.5833,
+    "vertical_trim_siding_ft": 27.75, "vertical_trim_other_ft": 24.9167,
+    "level_frieze_board_ft": 167.4167, "soffit_area_ft2": 557
+  },
+  "openings": {
+    "doors_ft2": 161,
+    "doors": [
+      { "id": "D-1", "w_in": 36, "h_in": 82, "area_ft2": 21 },
+      { "id": "D-2", "w_in": 192, "h_in": 84, "area_ft2": 112 },
+      { "id": "D-2_Entire", "w_in": 187, "h_in": 82, "area_ft2": 107 },
+      { "id": "SGD-1", "w_in": 60, "h_in": 80, "area_ft2": 33 }
+    ],
+    "windows_united_inches": 1836,
+    "windows_total_ft2": 203,
+    "windows": [
+      { "id": "W-1", "w_in": 29, "h_in": 53, "area_ft2": 11 },
+      { "id": "W-2", "w_in": 29, "h_in": 53, "area_ft2": 11 },
+      { "id": "W-3", "w_in": 29, "h_in": 53, "area_ft2": 11 },
+      { "id": "W-4", "w_in": 29, "h_in": 53, "area_ft2": 11 },
+      { "id": "W-5", "w_in": 19, "h_in": 58, "area_ft2": 8 },
+      { "id": "W-6", "w_in": 19, "h_in": 58, "area_ft2": 8 },
+      { "id": "W-7", "w_in": 44, "h_in": 19, "area_ft2": 6 },
+      { "id": "W-8", "w_in": 23, "h_in": 53, "area_ft2": 8 },
+      { "id": "W-9", "w_in": 23, "h_in": 53, "area_ft2": 8 },
+      { "id": "W-10", "w_in": 23, "h_in": 53, "area_ft2": 8 },
+      { "id": "W-11", "w_in": 27, "h_in": 52, "area_ft2": 10 },
+      { "id": "W-12", "w_in": 27, "h_in": 52, "area_ft2": 10 },
+      { "id": "W-13", "w_in": 27, "h_in": 39, "area_ft2": 7 },
+      { "id": "W-15", "w_in": 27, "h_in": 39, "area_ft2": 7 },
+      { "id": "W-16", "w_in": 17, "h_in": 37, "area_ft2": 4 },
+      { "id": "W-17", "w_in": 27, "h_in": 39, "area_ft2": 7 },
+      { "id": "W-18", "w_in": 21, "h_in": 37, "area_ft2": 5 },
+      { "id": "W-19", "w_in": 27, "h_in": 39, "area_ft2": 7 },
+      { "id": "W-20", "w_in": 24, "h_in": 47, "area_ft2": 8 },
+      { "id": "W-21", "w_in": 24, "h_in": 47, "area_ft2": 8 },
+      { "id": "W-22", "w_in": 24, "h_in": 47, "area_ft2": 8 },
+      { "id": "W-23", "w_in": 25, "h_in": 37, "area_ft2": 7 },
+      { "id": "W-24", "w_in": 25, "h_in": 37, "area_ft2": 7 },
+      { "id": "W-25", "w_in": 17, "h_in": 37, "area_ft2": 4 },
+      { "id": "W-26", "w_in": 19, "h_in": 43, "area_ft2": 6 },
+      { "id": "W-27", "w_in": 19, "h_in": 58, "area_ft2": 8 }
+    ]
+  },
+  "roof": {
+    "area_ft2": 3092, "pitch": "6/12",
+    "lengths_ft": { "ridges": 42.3333, "hips": 194.0833, "valleys": 78.3333, "eaves": 239.1667 },
+    "facets": {
+      "RF-1": 188, "RF-2": 173, "RF-3": 569, "RF-4": 114, "RF-5": 319, "RF-6": 178,
+      "RF-7": 231, "RF-8": 25, "RF-9": 722, "RF-10": 325, "RF-11": 65, "RF-12": 183
+    }
+  },
+  "soffit": {
+    "summary": { "total_len_ft": 225, "area_ft2": 557 },
+    "breakdown": [
+      { "num": 1, "type": "eave", "depth_in": 73, "length_ft": 24.4167, "area_ft2": 147, "pitch": "6/12" },
+      { "num": 2, "type": "eave", "depth_in": 24, "length_ft": 0, "area_ft2": 0, "pitch": "6/12" },
+      { "num": 3, "type": "eave", "depth_in": 24, "length_ft": 10.3333, "area_ft2": 21, "pitch": "6/12" },
+      { "num": 4, "type": "eave", "depth_in": 24, "length_ft": 35.1667, "area_ft2": 70, "pitch": "6/12" },
+      { "num": 5, "type": "eave", "depth_in": 24, "length_ft": 21.5, "area_ft2": 43, "pitch": "6/12" },
+      { "num": 6, "type": "eave", "depth_in": 24, "length_ft": 6.25, "area_ft2": 12, "pitch": "6/12" },
+      { "num": 7, "type": "eave", "depth_in": 22, "length_ft": 2.75, "area_ft2": 4, "pitch": "6/12" },
+      { "num": 8, "type": "eave", "depth_in": 2, "length_ft": 2.3333, "area_ft2": 0, "pitch": "6/12" },
+      { "num": 9, "type": "eave", "depth_in": 22, "length_ft": 4.9167, "area_ft2": 8, "pitch": "6/12" },
+      { "num": 10, "type": "eave", "depth_in": 10, "length_ft": 4.1667, "area_ft2": 3, "pitch": "6/12" },
+      { "num": 11, "type": "eave", "depth_in": 22, "length_ft": 22.3333, "area_ft2": 39, "pitch": "6/12" },
+      { "num": 12, "type": "eave", "depth_in": 24, "length_ft": 13.75, "area_ft2": 27, "pitch": "6/12" },
+      { "num": 13, "type": "eave", "depth_in": 46, "length_ft": 2, "area_ft2": 8, "pitch": "6/12" },
+      { "num": 14, "type": "eave", "depth_in": 24, "length_ft": 33.5, "area_ft2": 67, "pitch": "6/12" },
+      { "num": 15, "type": "eave", "depth_in": 24, "length_ft": 21.6667, "area_ft2": 43, "pitch": "6/12" },
+      { "num": 16, "type": "eave", "depth_in": 24, "length_ft": 12.4167, "area_ft2": 25, "pitch": "6/12" },
+      { "num": 17, "type": "eave", "depth_in": 73, "length_ft": 7.5, "area_ft2": 39, "pitch": "6/12" }
+    ]
+  },
+  "roof_pitch_breakdown": [{ "pitch": "6/12", "area_ft2": 3092, "percent": 100 }]
+}

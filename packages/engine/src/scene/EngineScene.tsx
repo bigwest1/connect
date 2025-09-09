@@ -1,8 +1,11 @@
 "use client";
 import { House } from "../parametric/house";
+import { DeviceMeshes } from "../devices/DeviceMeshes";
 import { useDevices } from "@homegraph/devices";
 import { useEffect, useMemo } from "react";
-import { EffectComposer, Bloom, SMAA, FXAA } from "@react-three/postprocessing";
+import { EffectComposer, Bloom, SMAA, FXAA, SSAO } from "@react-three/postprocessing";
+import { Environment, Sky } from "@react-three/drei";
+import { ACESFilmicToneMapping, SRGBColorSpace } from "three";
 import { useDayNight } from "../daynight";
 import { useHouse } from "../state/house";
 import { useQuality } from "../quality/context";
@@ -43,6 +46,12 @@ export function EngineScene({ dayState, perf }: { dayState: [number, (v: number)
       const dpr = (window.devicePixelRatio || 1) * ratio;
       const gl = (document.querySelector('canvas') as any)?.__r3f?.root?.getState?.().gl as any;
       if (gl && typeof gl.setPixelRatio === 'function') gl.setPixelRatio(dpr);
+      if (gl) {
+        gl.outputColorSpace = SRGBColorSpace;
+        gl.toneMapping = ACESFilmicToneMapping;
+        gl.toneMappingExposure = 1.0;
+        gl.physicallyCorrectLights = true;
+      }
     } catch {}
   }, [quality?.settings.pixelRatio]);
 
@@ -51,21 +60,29 @@ export function EngineScene({ dayState, perf }: { dayState: [number, (v: number)
       <ambientLight intensity={ambient} />
       <directionalLight position={[5, 8, 2]} intensity={sun} castShadow shadow-mapSize={quality?.settings.shadowMapSize ?? (perf.tier === "Ultra" ? 4096 : perf.tier === "High" ? 2048 : 1024)} />
 
-      <House metrics={metrics} position={[0, 1.2, 0]} tier={perf.tier} />
+      {/* Environment lighting */}
+      <Environment preset="sunset" background={false} />
+      <Sky sunPosition={[10, 15, 10]} turbidity={3} rayleigh={1} mieCoefficient={0.005} mieDirectionalG={0.8} />
 
-      {/* emissive lights driven by devices */}
-      {devices.map((d, i) => (
-        <mesh key={d.id} position={[-1 + i * 0.3, 0.1, 1]}>
-          <sphereGeometry args={[0.05, 16, 16]} />
-          <meshStandardMaterial
-            emissive={d.state.on ? (d.state.colorRGB ?? "#ffd7a8") : "#111"}
-            emissiveIntensity={d.state.on ? ((d.state.brightness ?? 0.6) + 0.2) * (1.1 + (1 - day)) : 0.05}
-            color="#333"
-          />
-        </mesh>
-      ))}
+      <House metrics={metrics} position={[0, 1.2, 0]} tier={perf.tier} />
+      <DeviceMeshes perimeter_ft={metrics.footprint.perimeter_ft} area_ft2={metrics.footprint.area_ft2} />
+
+      {/* devices are rendered by DeviceMeshes */}
 
       <EffectComposer multisampling={perf.tier === "Battery" ? 0 : 2} enabled>
+        {quality?.settings.ssao.enabled ? (
+          <SSAO
+            samples={quality.settings.ssao.samples}
+            radius={quality.settings.ssao.radius}
+            intensity={quality.settings.ssao.intensity}
+            resolutionScale={quality.settings.ssao.resolutionScale}
+            depthAwareUpsampling
+            worldDistanceThreshold={0.6}
+            worldDistanceFalloff={0.1}
+            worldProximityThreshold={0.2}
+            worldProximityFalloff={0.1}
+          />
+        ) : <></>}
         {perf.tier === 'Balanced' ? <FXAA /> : <></>}
         {(perf.tier === 'Ultra' || perf.tier === 'High') ? <SMAA /> : <></>}
         <Bloom intensity={bloomIntensity * (1 + (1 - day) * 0.5)} luminanceThreshold={bloomThreshold} kernelSize={bloomKernel} mipmapBlur />

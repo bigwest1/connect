@@ -1,6 +1,7 @@
 const CACHE = 'homegraph-v3';
 const ASSETS = [
   '/',
+  '/docs/metrics.full.json',
   '/docs/metrics.json',
   '/assets/mock-scan.glb',
   '/assets/example.gif'

@@ -20,6 +20,45 @@ export const defaultDevices: Device[] = [
     actions: { toggle: () => {}, select: () => {} },
     icon: "💡",
     position: [0.7, 0.15]
+  },
+  {
+    id: "lock-1",
+    name: "Front Door Lock",
+    type: "lock",
+    capabilities: ["onOff"],
+    state: { on: true, locked: true },
+    actions: { toggle: () => {}, select: () => {} },
+    icon: "🔒",
+    position: [0.25, 0.32]
+  },
+  {
+    id: "garage-door-1",
+    name: "Garage Door",
+    type: "garageDoor",
+    capabilities: ["openClose"],
+    state: { open: 0 },
+    actions: { toggle: () => {}, select: () => {} },
+    icon: "🚪",
+    position: [0.78, 0.28]
+  },
+  {
+    id: "camera-1",
+    name: "Front Camera",
+    type: "camera",
+    capabilities: ["panTilt", "onOff"],
+    state: { on: true, pan: 0, tilt: 0 },
+    actions: { toggle: () => {}, select: () => {} },
+    icon: "📷",
+    position: [0.52, 0.12]
+  },
+  {
+    id: "outlet-1",
+    name: "Back Outlet",
+    type: "outlet",
+    capabilities: ["onOff"],
+    state: { on: false },
+    actions: { toggle: () => {}, select: () => {} },
+    icon: "🔌",
+    position: [0.18, 0.65]
   }
 ];
-
