@@ -1,0 +1,15 @@
+{
+  "stories": 2,
+  "footprint": { "perimeter_ft": 232.4167, "area_ft2": 2261 },
+  "sidingByElevation_ft2": { "front": 188, "right": 376, "left": 378, "back": 451, "total": 1393 },
+  "brick_ft2": 225,
+  "openings": {
+    "total_ft2": 541,
+    "doors": [{ "w_in": 36, "h_in": 82 }, { "w_in": 192, "h_in": 84 }, { "w_in": 60, "h_in": 80 }],
+    "windows_total_ft2": 203,
+    "windows_united_inches": 1836
+  },
+  "roof": { "area_ft2": 3092, "pitch": "6/12", "eaves_ft": 239.1667 },
+  "soffit_area_ft2": 557
+}
+

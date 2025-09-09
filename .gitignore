@@ -1,0 +1,13 @@
+node_modules
+.DS_Store
+dist
+.next
+coverage
+reports
+storybook-static
+.turbo
+.env
+.env.*
+packages/db/node_modules/.prisma
+packages/db/prisma/dev.db
+

@@ -1,0 +1,32 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": [
+    "app",
+    "components",
+    "lib",
+    "workers",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "compilerOptions": {
+    "moduleResolution": "Bundler",
+    "allowJs": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.stories.ts",
+    "**/*.stories.tsx",
+    ".storybook",
+    "storybook-static"
+  ]
+}

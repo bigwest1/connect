@@ -1,0 +1,97 @@
+// PlanetScale-safe schema. Use `prisma migrate diff` or `migrate deploy` on branches.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+enum Role {
+  OWNER
+  FAMILY
+  GUEST
+  INSTALLER
+}
+
+model User {
+  id        String  @id @default(cuid())
+  email     String  @unique
+  role      Role    @default(FAMILY)
+  homes     Home[]
+  memberships Membership[]
+}
+
+model Home {
+  id          String   @id @default(cuid())
+  name        String
+  ownerId     String
+  owner       User     @relation(fields: [ownerId], references: [id])
+  members     Membership[]
+  devices     Device[]
+  scenes      Scene[]
+  rooms       Room[]
+  metricsJson String   @default("{}")
+  createdAt   DateTime @default(now())
+}
+
+model Membership {
+  id      String @id @default(cuid())
+  userId  String
+  homeId  String
+  role    Role   @default(FAMILY)
+  user    User   @relation(fields: [userId], references: [id])
+  home    Home   @relation(fields: [homeId], references: [id])
+  @@unique([userId, homeId])
+}
+
+model Device {
+  id        String  @id @default(cuid())
+  homeId    String
+  roomId    String? 
+  name      String
+  type      String
+  stateJson String  @default("{}")
+  home      Home    @relation(fields: [homeId], references: [id])
+  room      Room?   @relation(fields: [roomId], references: [id])
+}
+
+model Scene {
+  id        String   @id @default(cuid())
+  homeId    String
+  name      String
+  graphJson String   @default("{}")
+  home      Home     @relation(fields: [homeId], references: [id])
+}
+
+model Room {
+  id      String @id @default(cuid())
+  homeId  String
+  name    String
+  home    Home   @relation(fields: [homeId], references: [id])
+  devices Device[]
+}
+
+model DeviceSchedule {
+  deviceId  String  @id
+  json      String  @default("[]")
+  updatedAt DateTime @updatedAt
+}
+
+model DeviceState {
+  deviceId  String  @id
+  json      String  @default("{}")
+  updatedAt DateTime @updatedAt
+}
+
+model ScanMesh {
+  id        String   @id @default(cuid())
+  homeId    String
+  name      String
+  mime      String   @default("model/gltf-binary")
+  data      String   // base64 encoded AES-GCM payload (iv:ciphertext:tag)
+  createdAt DateTime @default(now())
+}

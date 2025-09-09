@@ -1,0 +1,29 @@
+{
+  "name": "homegraph",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@9.6.0",
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "lint": "turbo run lint",
+    "format": "prettier --write .",
+    "storybook": "turbo run storybook",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@types/react": "^18.2.75",
+    "@types/react-dom": "^18.2.24",
+    "eslint": "^9.9.0",
+    "eslint-config-turbo": "^2.1.3",
+    "eslint-config-next": "^14.2.5",
+    "husky": "^9.0.11",
+    "prettier": "^3.3.3",
+    "turbo": "^2.1.3",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}

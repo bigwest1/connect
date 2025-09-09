@@ -1,0 +1,19 @@
+{
+  "name": "@homegraph/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "capacitor run ios --external || true",
+    "build": "echo 'Capacitor app wraps web build';",
+    "sync": "capacitor sync"
+  },
+  "dependencies": {
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/ios": "^6.1.2",
+    "@capacitor/android": "^6.1.2",
+    "@homegraph/mobile-bridge": "workspace:*"
+  }
+}
+
