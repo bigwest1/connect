@@ -22,6 +22,14 @@ jobs:
         with:
           version: 9.6.0
 
+      - name: Print tool versions
+        run: |
+          echo "Node:" $(node -v)
+          echo "pnpm:" $(pnpm -v)
+          echo "Corepack:" $(corepack -v || echo "not available")
+          echo "CI=$CI"
+          echo "NPM_CONFIG_FROZEN_LOCKFILE=${NPM_CONFIG_FROZEN_LOCKFILE:-unset}"
+
       - name: Install dependencies
         run: pnpm -w -r install
 
@@ -54,4 +62,3 @@ jobs:
           name: test-results
           path: apps/web/test-results
           if-no-files-found: ignore
-
