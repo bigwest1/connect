@@ -66,8 +66,8 @@ export function EngineScene({ dayState, perf }: { dayState: [number, (v: number)
       ))}
 
       <EffectComposer multisampling={perf.tier === "Battery" ? 0 : 2} enabled>
-        <FXAA enabled={perf.tier === 'Balanced'} />
-        <SMAA enabled={perf.tier === 'Ultra' || perf.tier === 'High'} />
+        {perf.tier === 'Balanced' ? <FXAA /> : <></>}
+        {(perf.tier === 'Ultra' || perf.tier === 'High') ? <SMAA /> : <></>}
         <Bloom intensity={bloomIntensity * (1 + (1 - day) * 0.5)} luminanceThreshold={bloomThreshold} kernelSize={bloomKernel} mipmapBlur />
       </EffectComposer>
     </group>
